@@ -45,55 +45,38 @@ $(document).ready(function() {
 }
 });
 
-=============================================================================================
-    
+
+
+========================================================================================
 $(document).ready(function() {
-    console.log("PHONE OK!");
-
-var input = $(".phone input");
-
-//var input = document.getElementById($(".phone input").attr("id"));
-
-input.addEventListener('input', () => {
-    let inputValue = input.value.replace(/\D/g, ''); // Remove tudo que não é número
-    let formattedValue = '';
-
-    // Verifica se o telefone está no formato esperado
-    if (inputValue.length >= 2) {
-        // Formata os dois primeiros dígitos do número em parênteses
-        formattedValue = `(${inputValue.substring(0, 2)}`;
-
-        // Insere o hífen entre os grupos de números
-        if (inputValue.length > 2) {
-            formattedValue += `) ${inputValue.substring(2, 7)}`;
-        }
-
-        // Insere o hífen entre os grupos de números
-        if (inputValue.length > 7) {
-            formattedValue += `-${inputValue.substring(7, 11)}`;
-        }
-    } else {
-        // Usa o valor de entrada como está
-        formattedValue = inputValue;
-    }
-
-    //Atualiza o valor do campo de entrada com a versão formatada
-    input.value = formattedValue;
-});
-
-input.addEventListener('keydown', function(event) {
-    const key = event.key; // const {key} = event; ES6+
-    if (key === "Backspace") {
-        console.log("Backspace pressed!");
-        let inputValue = input.value.replace(/\D/g, '');
-        console.log(inputValue);
-//      console.log(inputValue.replace(/.$/, ""));
-        input.value = inputValue; //inputValue.replace(/.$/, "");
-    }
-});
+    console.log("RG OK!");
     
-=============================================================================================
+    // Selecionar o primeiro elemento dentro da coleção $(".rg input")
+    var input = $(".rg input").get(0);
+    
+    // Adicionar o ouvinte de eventos ao elemento selecionado
+    input.addEventListener('input', function() {
+        let rg = this.value.replace(/\D/g, ''); // Remove tudo que não é número
+        let formattedRg = formatRG(rg);
+        this.value = formattedRg;
+    });
 
+    function formatRG(rg) {
+        // Adiciona os pontos e o hífen no formato desejado
+        let formatted = '';
+        for (let i = 0; i < rg.length; i++) {
+            if (i === 2 || i === 5) {
+                formatted += '.';
+            } else if (i === 8) {
+                formatted += '-';
+            }
+            formatted += rg[i];
+        }
+        return formatted;
+    }
+});
+
+=======================================================================
 $(document).ready(function() {
     console.log("PHONE OK!");
     
@@ -126,5 +109,3 @@ $(document).ready(function() {
         return formatted;
     }
 });
-
-=============================================================================================

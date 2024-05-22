@@ -1,4 +1,3 @@
-//Necessario declarar a Classe(s) de CSS no lime survey (cpf),(rg),(phone) 
 =============================================================================================
 
 $(document).ready(function() {
@@ -45,8 +44,6 @@ $(document).ready(function() {
 }
 });
 
-
-
 ========================================================================================
 $(document).ready(function() {
     console.log("RG OK!");
@@ -55,10 +52,14 @@ $(document).ready(function() {
     var input = $(".rg input").get(0);
     
     // Adicionar o ouvinte de eventos ao elemento selecionado
-    input.addEventListener('input', function() {
-        let rg = this.value.replace(/\D/g, ''); // Remove tudo que não é número
-        let formattedRg = formatRG(rg);
-        this.value = formattedRg;
+input.addEventListener('input', () => {
+        let rg = input.value.replace(/\D/g, ''); // Remove tudo que não é número
+        input.value = formatRG(rg);
+        if (rg.length === 9 && formatRG(rg)) {
+            input.setCustomValidity('');
+        } else {
+            input.setCustomValidity('RG inválido!');
+        }
     });
 
     function formatRG(rg) {
@@ -79,18 +80,21 @@ $(document).ready(function() {
 =======================================================================
 $(document).ready(function() {
     console.log("PHONE OK!");
-    
-    // Seleciona o primeiro input dentro do elemento com a classe "phone"
+
     var input = $(".phone input").get(0);
-    
-    input.addEventListener('input', function() {
-        let phone = this.value; // Obtém o valor atual do input
-        let formattedPhone = formatPhoneNumber(phone); // Formata o telefone
-        this.value = formattedPhone; // Atualiza o valor do input com o telefone formatado
+    input.addEventListener('input', () => {
+        let phone = input.value.replace(/\D/g, ''); // Remove tudo que não é número
+        input.value = formatPhoneNumber(phone); // Formata o número de telefone
+
+        // Valida o número de telefone
+        if (phone.length === 11 && validatePhone(phone)) {
+            input.setCustomValidity(''); // Sem erro
+        } else {
+            input.setCustomValidity('Phone inválido!'); 
+        }
     });
-    
+
     function formatPhoneNumber(phone) {
-        // Remove tudo que não é número
         let cleaned = phone.replace(/\D/g, '');
         let formatted = '';
 
@@ -109,3 +113,4 @@ $(document).ready(function() {
         return formatted;
     }
 });
+=======================================================================
